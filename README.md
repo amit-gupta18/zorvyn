@@ -59,10 +59,11 @@ Recommended defaults:
 
 The blueprint uses:
 
-- Build command: `npm ci && npx prisma generate && npm run build`
+- Build command: `npm ci --include=dev && npx prisma generate && npx prisma migrate deploy && npm run build`
 - Start command: `npm run start`
-- Pre-deploy command: `npx prisma migrate deploy`
 - Health check path: `/health`
+
+Render free tier does not support a pre-deploy command, so migrations run during the build step.
 
 Before the first deploy, create and commit a Prisma migration locally with:
 
