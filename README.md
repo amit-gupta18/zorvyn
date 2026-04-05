@@ -42,6 +42,34 @@ Production-style Node.js backend for finance data processing with Express, TypeS
    npm run dev
    ```
 
+## Deploying to Render
+
+This repository includes a [render.yaml](render.yaml) blueprint for a Node web service.
+
+Required environment variables on Render:
+
+- `DATABASE_URL`
+- `JWT_SECRET`
+- `NODE_ENV=production`
+
+Recommended defaults:
+
+- `JWT_EXPIRES_IN=1d`
+- `BCRYPT_SALT_ROUNDS=10`
+
+The blueprint uses:
+
+- Build command: `npm ci && npx prisma generate && npm run build`
+- Start command: `npm run start`
+- Pre-deploy command: `npx prisma migrate deploy`
+- Health check path: `/health`
+
+Before the first deploy, create and commit a Prisma migration locally with:
+
+```bash
+npx prisma migrate dev --name init
+```
+
 ## Scripts
 
 - `npm run dev` - run in development

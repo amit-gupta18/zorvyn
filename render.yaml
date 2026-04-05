@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: zorvyn
+    env: node
+    plan: free
+    buildCommand: npm ci --include=dev && npx prisma generate && npm run build
+    startCommand: npm run start
+    preDeployCommand: npx prisma migrate deploy
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: JWT_EXPIRES_IN
+        value: 1d
+      - key: BCRYPT_SALT_ROUNDS
+        value: "10"
